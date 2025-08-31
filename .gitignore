@@ -1,0 +1,6 @@
+microgradEnv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+andrej-micrograd/
