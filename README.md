@@ -16,20 +16,31 @@ A minimal implementation of automatic differentiation engine inspired by Andrej 
 
 ```python
 from nanograd.engine import Value
+from utils.plot_exp import draw_dot
 
 # Create Value objects
-a = Value(2.0)
-b = Value(3.0)
+a = Value(2.0, label='a')
+b = Value(3.0, label='b')
+c = Value(-1.2, label='c')
 
 # Perform operations
-c = a + b
 d = a * b
-e = a ** 2
+d.label = 'd'
+e = d + c
+e.label = 'e'
+e.backward()
+
+# draw the computation graph
+draw_dot(e)
 
 # Compute gradients
 c.backward()
-print(f"Gradient of a: {a.grad}")
+
+# plot the computation graph
+draw_dot(c)
 ```
+
+![computation graph](./img/exp-graph.png)
 
 #### Neural Networks
 
@@ -84,7 +95,7 @@ refer to file `experiments-grad.ipynb`
 ### Requirements
 
 - Python 3.6+
-- No external dependencies (uses only standard library)
+- graphviz
 
 ### References
 
