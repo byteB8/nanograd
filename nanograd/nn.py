@@ -5,13 +5,13 @@ from nanograd.engine import Value
 
 class Module:
     def __init__(self):
-        self.parameters = []
+        pass
 
     def parameters(self):
-        return self.parameters
+        return []
 
     def zero_grad(self):
-        for p in self.parameters:
+        for p in self.parameters():
             p.grad = 0.0
 
 
@@ -78,8 +78,8 @@ class MLP(Module):
 
     def train(self, xs, ys, n_iter=100, lr=0.01):
         for k in range(n_iter):
-            ypred = [self(x) for x in xs]
-            loss = sum(((yout - ygt)**2 for yout,
+            ypred = [self([Value(xi) for xi in x]) for x in xs]
+            loss = sum(((yout - Value(ygt))**2 for yout,
                        ygt in zip(ypred, ys)), Value(0.0))
             self.zero_grad()
             loss.backward()
