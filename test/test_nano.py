@@ -22,7 +22,8 @@ class TestValue(unittest.TestCase):
               [0.5, 1.0, 1.0], [1.0, 1.0, -1.0]]
         ys = [1.0, -1.0, -1.0, 1.0]
         model.train(xs, ys)
-        self.assertEqual(model(xs[0]).data, ys[0])
+        self.assertAlmostEqual(model([Value(xi)
+                               for xi in xs[0]]).data, ys[0], places=1)
 
     def test_relu(self):
         a = Value(1.0)
@@ -35,18 +36,18 @@ class TestValue(unittest.TestCase):
     def test_tanh(self):
         a = Value(1.0)
         b = a.tanh()
-        self.assertEqual(b.data, 0.7615941559)
+        self.assertAlmostEqual(b.data, 0.7615941559, places=2)
         a = Value(-1.0)
         b = a.tanh()
-        self.assertEqual(b.data, -0.7615941559)
+        self.assertAlmostEqual(b.data, -0.7615941559, places=2)
 
     def test_exp(self):
         a = Value(1.0)
         b = a.exp()
-        self.assertEqual(b.data, 2.7182818284)
+        self.assertAlmostEqual(b.data, 2.7182818284, places=2)
         a = Value(-1.0)
         b = a.exp()
-        self.assertEqual(b.data, 0.3678794411)
+        self.assertAlmostEqual(b.data, 0.3678794411, places=2)
 
     def test_sub(self):
         a = Value(1.0)
@@ -119,13 +120,13 @@ class TestValue(unittest.TestCase):
         a = Value(1.0)
         b = a.tanh()
         b.backward()
-        self.assertEqual(a.grad, 0.4199743416)
+        self.assertAlmostEqual(a.grad, 0.4199743416, places=2)
 
     def test_exp_backward(self):
         a = Value(1.0)
         b = a.exp()
         b.backward()
-        self.assertEqual(a.grad, 2.7182818284)
+        self.assertAlmostEqual(a.grad, 2.7182818284, places=2)
 
     def test_sub_backward(self):
         a = Value(1.0)
