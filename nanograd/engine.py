@@ -21,6 +21,11 @@ class Value:
         out._backward = _backward
         return out
 
+    def __radd__(self, other):  # other + self, a + 2 works, but 2 + a does not work (2.__add__(a))
+        if not isinstance(other, Value):
+            other = Value(other)
+        return other + self
+
     def __mul__(self, other):
         if not isinstance(other, Value):
             other = Value(other)
