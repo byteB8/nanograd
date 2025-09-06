@@ -95,7 +95,7 @@ refer to file `experiments-grad.ipynb`
 ### Requirements
 
 - Python 3.6+
-- graphviz
+- graphviz (only if you want to plot the computation graph)
 
 ### References
 
