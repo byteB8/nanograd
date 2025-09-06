@@ -64,6 +64,11 @@ class Value:
         out._backward = _backward
         return out
 
+    def __rsub__(self, other):  # other - self
+        if not isinstance(other, Value):
+            other = Value(other)
+        return other + (-self)
+
     def tanh(self):
         x = self.data
         t = (math.exp(2*x)-1) / (math.exp(2*x)+1)
