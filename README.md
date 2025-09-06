@@ -30,9 +30,6 @@ e = d + c
 e.label = 'e'
 e.backward()
 
-# draw the computation graph
-draw_dot(e)
-
 # Compute gradients
 c.backward()
 
