@@ -75,3 +75,15 @@ class MLP(Module):
 
     def __repr__(self):
         return f"MLP of [{', '.join(str(layer) for layer in self.layers)}]"
+
+    def train(self, xs, ys, n_iter=100, lr=0.01):
+        for k in range(n_iter):
+            ypred = [self(x) for x in xs]
+            loss = sum(((yout - ygt)**2 for yout,
+                       ygt in zip(ypred, ys)), Value(0.0))
+            self.zero_grad()
+            loss.backward()
+            for p in self.parameters():
+                p.data += -lr * p.grad
+            if (k+1) % 5 == 0:
+                print(f"iter:{k+1}, loss:{loss.data}")
