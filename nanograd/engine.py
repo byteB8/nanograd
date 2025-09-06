@@ -55,6 +55,12 @@ class Value:
             other = Value(other)
         return self * other**-1
 
+    # other / self, a / 2 works, but 2 / a does not work (2.__truediv__(a))
+    def __rtruediv__(self, other):
+        if not isinstance(other, Value):
+            other = Value(other)
+        return other * self**-1
+
     def __neg__(self):
         return Value(-self.data, _children=(self,), _op='neg')
 
