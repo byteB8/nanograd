@@ -1,3 +1,6 @@
+import math
+
+
 class Value:
     def __init__(self, data, _children=(), _op='', label=''):
         self.data = data
@@ -44,6 +47,16 @@ class Value:
 
         def _backward():
             self.grad += out.grad * other * self.data**(other-1)
+        out._backward = _backward
+        return out
+
+    def __rpow__(self, other):  # other ** self, handles cases like 2 ** a
+        assert isinstance(other, (int, float)
+                          ), "only supporting int/float bases for now"
+        out = Value(other**self.data, _children=(self,), _op=f'{other}**')
+
+        def _backward():
+            self.grad += out.grad * other**self.data * math.log(other)
         out._backward = _backward
         return out
 
